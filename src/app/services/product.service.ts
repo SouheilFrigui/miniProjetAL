@@ -10,7 +10,7 @@ export class ProductService {
 
   AllProducts=new BehaviorSubject<productModel[]>(null as any);
   constructor(private http:HttpClient) {
-
+      this.getFromDb("");
    }
 
   private baseUrl="http://localhost:8000/api/";
@@ -30,7 +30,7 @@ public update(form:any){
   public getFromDb(keys:any){
     return this.http.post(this.baseUrl+"show?keys="+keys, null).subscribe(res=>{
       var r:any =res;
-      this.AllProducts.next(r.products)
+      this.AllProducts.next(r.products);
     });
     }
 }

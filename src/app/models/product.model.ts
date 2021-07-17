@@ -1,4 +1,5 @@
 export class productModel{
+    id:any="";
     name:any="";
     category:any="";
     brand:any="";

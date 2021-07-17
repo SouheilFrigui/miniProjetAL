@@ -1,1 +1,298 @@
-<p>products works!</p>
+<div style="padding: 2%;">
+    <div class="card card-primary card-outline">
+        <div class="card-header">
+          <h3 class="card-title">List</h3>
+    
+          <div class="card-tools">
+            <div class="input-group input-group-sm">
+              <input #inputForSearch (keyup)="search(inputForSearch.value)" type="text" class="form-control" placeholder="Search Products">
+              <div class="input-group-append">
+                <div class="btn btn-primary">
+                  <i class="fas fa-search"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-tools -->
+        </div>
+        <!-- /.card-header -->
+        <div class="card-body p-0">
+          <div class="mailbox-controls">
+            <button type="button" id="np" class="btn btn-primary" data-toggle="modal" data-target="#AddModal"><i class="fas fa-plus-circle"> Add a new product</i></button>
+            <!-- Check all button -->
+            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+            <div class="float-right">
+              1-50/200
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+              </div>
+              <!-- /.btn-group -->
+            </div>
+            <!-- /.float-right -->
+          </div>
+          <div class="table-responsive mailbox-messages">
+            <table class="table table-hover table-striped">
+              <tbody>
+                <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Brand</th>
+                    <th>Price</th>
+                    <th>Description</th>
+                    <th></th>
+                </tr>
+                <tr *ngFor="let p of products">
+                    <td><img src="{{p.imgpath}}" style="width: 50px; height: 50px;"></td>
+                    <td>{{p.name}}</td>
+                    <td>{{p.category}}</td>
+                    <td>{{p.brand}}</td>
+                    <td>{{p.price}}</td>
+                    <td>{{p.desc | slice:0:20}}</td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-sm"><i (click)="selectToDelete(p.id)" data-toggle="modal" data-target="#DeleteModal" class="fas fa-trash"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i (click)="selectToUpdate(p.id)" data-toggle="modal" data-target="#UpdateModal" class="fas fa-edit"></i></button>
+                        <button type="button" class="btn btn-default btn-sm"><i (click)="selectToShow(p.id)" data-toggle="modal" data-target="#ShowModal" class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+              </tbody>
+            </table>
+            <!-- /.table -->
+          </div>
+          <!-- /.mail-box-messages -->
+        </div>
+        <!-- /.card-body -->
+        <div class="card-footer p-0">
+          <div class="mailbox-controls">
+            <!-- Check all button -->
+            <button type="button" class="btn btn-default btn-sm checkbox-toggle"><i class="far fa-square"></i>
+            </button>
+            <div class="btn-group">
+              <button type="button" class="btn btn-default btn-sm"><i class="far fa-trash-alt"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-reply"></i></button>
+              <button type="button" class="btn btn-default btn-sm"><i class="fas fa-share"></i></button>
+            </div>
+            <!-- /.btn-group -->
+            <button type="button" class="btn btn-default btn-sm"><i class="fas fa-sync-alt"></i></button>
+            <div class="float-right">
+              1-50/200
+              <div class="btn-group">
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-left"></i></button>
+                <button type="button" class="btn btn-default btn-sm"><i class="fas fa-chevron-right"></i></button>
+              </div>
+              <!-- /.btn-group -->
+            </div>
+            <!-- /.float-right -->
+          </div>
+        </div>
+      </div>
+</div>
+
+
+
+
+
+
+<!-- modal to update a product -->
+  
+  <!-- Modal -->
+  <div class="modal fade" id="AddModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3">
+                    <img class="img-thumbnail" id="AddEmpImage" style="width: 100px; height: 100px;" src="./assets/1.png" alt="">
+                </div>
+                <div class="col-md-9">
+                    <input id="image" type="file" style="margin-left: 10px;" (change)="onSelect($event)" accept="image/*">
+                </div>
+              </div><br> 
+              <label>Name :</label>
+              <div class="row">
+                <input id="name" class="form-control">
+            </div>
+              <div class="row">
+                <label>Category :</label>
+                <div class="col">
+                    <select class="form-control" id="category">
+                    <option  value="Shoes">Shoes</option>
+                    <option  value="Bags">Bags</option>
+                </select>
+            </div>
+            <label>Brand :</label>
+                <div class="col">
+                    <select class="form-control" id="brand">
+                    <option  value="Nike">Nike</option>
+                    <option  value="Adidas">Adidas</option>
+                </select>
+            </div>
+            <label>Price :</label>
+            <div class="col"><input type="number"  id="price" class="form-control"></div>
+              </div>
+              <div class="row">
+                <label>Description :</label>
+                <textarea id="desc" class="form-control" style="height: 100px;"> 
+
+                </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="add()">Add Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="UpdateModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Update Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3">
+                    <img class="img-thumbnail" id="AddEmpImage" style="width: 100px; height: 100px;" src="./assets/1.png" alt="">
+                </div>
+                <div class="col-md-9">
+                </div>
+              </div><br> 
+              <label>Name :</label>
+              <div class="row">
+                <input id="uname" class="form-control">
+            </div>
+              <div class="row">
+                <label>Category :</label>
+                <div class="col">
+                    <select class="form-control" id="ucategory">
+                    <option id="oldCategory" value="Adidas"></option>
+                    <option  value="Shoes">Shoes</option>
+                    <option  value="Bags">Bags</option>
+                </select>
+            </div>
+            <label>Brand :</label>
+                <div class="col">
+                    <select class="form-control" id="ubrand">
+                    <option id="oldBrand" value="Adidas"></option>
+                    <option  value="Nike">Nike</option>
+                    <option  value="Adidas">Adidas</option>
+                </select>
+            </div>
+            <label>Price :</label>
+            <div class="col"><input type="number"  id="uprice" class="form-control"></div>
+              </div>
+              <div class="row">
+                <label>Description :</label>
+                <textarea id="udesc" class="form-control" style="height: 100px;"> 
+
+                </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="update()">Update Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="DeleteModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Delete Product</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h1>Do you really want to delete this product?</h1>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" data-dismiss="modal" (click)="delete()">Delete Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+ 
+  <div class="modal fade" id="ShowModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Show Product Details</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="container-fluid">
+              <div class="row">
+                <div class="col-md-3">
+                    <img class="img-thumbnail" id="AddEmpImage" style="width: 100px; height: 100px;" src="./assets/1.png" alt="">
+                </div>
+                <div class="col-md-9">
+                </div>
+              </div><br> 
+              <label>Name :</label>
+              <div class="row">
+                <input disabled id="sname" class="form-control">
+            </div>
+              <div class="row">
+                <label>Category :</label>
+                <div class="col">
+                    <select disabled class="form-control" id="scategory">
+                    <option id="SoldCategory" value="Adidas"></option>
+                    <option  value="Shoes">Shoes</option>
+                    <option  value="Bags">Bags</option>
+                </select>
+            </div>
+            <label>Brand :</label>
+                <div class="col">
+                    <select disabled class="form-control" id="sbrand">
+                    <option id="SoldBrand" value="Adidas"></option>
+                    <option  value="Nike">Nike</option>
+                    <option  value="Adidas">Adidas</option>
+                </select>
+            </div>
+            <label>Price :</label>
+            <div class="col"><input disabled type="number"  id="sprice" class="form-control"></div>
+              </div>
+              <div class="row">
+                <label>Description :</label>
+                <textarea disabled id="sdesc" class="form-control" style="height: 100px;"> 
+
+                </textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+        </div>
+      </div>
+    </div>
+  </div>
